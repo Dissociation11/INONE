@@ -19,6 +19,14 @@
     {
       "name": "Undefine",
       "value": "Undefine"
+    },
+    {
+      "name": "ShortForm",
+      "value": "ShortForm"
+    },
+    {
+      "name": "Mine",
+      "value": "Mine"
     }
   ]
 }
