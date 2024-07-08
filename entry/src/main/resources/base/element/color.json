@@ -7,6 +7,10 @@
     {
       "name": "main_background_color",
       "value": "#F1F3F5"
+    },
+    {
+      "name": "LOGIN_COLOR",
+      "value": "#FFF576C2"
     }
   ]
 }

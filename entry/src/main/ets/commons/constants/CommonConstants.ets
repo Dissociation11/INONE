@@ -7,4 +7,5 @@ export class CommonConstants{
   static readonly FULL_PERCENT : string = "100%"
 
 
+
 }

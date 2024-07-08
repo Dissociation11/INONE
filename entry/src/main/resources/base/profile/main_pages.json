@@ -1,5 +1,8 @@
 {
   "src": [
-    "pages/MainPage"
+    "pages/MainPage",
+    "pages/Login",
+    "pages/Register",
+    "pages/Transition"
   ]
 }
