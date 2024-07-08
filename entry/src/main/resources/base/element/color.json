@@ -5,8 +5,12 @@
       "value": "#FFFFFF"
     },
     {
-      "name": "main_background_color",
+      "name": "tabbar_background_color",
       "value": "#F1F3F5"
+    },
+    {
+      "name": "mine_backgroun_color",
+      "value": "#F3F3F3"
     }
   ]
 }

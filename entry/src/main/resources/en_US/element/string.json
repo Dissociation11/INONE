@@ -19,6 +19,58 @@
     {
       "name": "Undefine",
       "value": "Undefine"
+    },
+    {
+      "name": "ShortForm",
+      "value": "ShortForm"
+    },
+    {
+      "name": "Mine",
+      "value": "Mine"
+    },
+    {
+      "name": "Radio",
+      "value": "Radio"
+    },
+    {
+      "name": "Setting",
+      "value": "Setting"
+    },
+    {
+      "name": "Help",
+      "value": "Help"
+    },
+    {
+      "name": "Cartoon",
+      "value": "Cartoon"
+    },
+    {
+      "name": "Commonweal",
+      "value": "CommonWeal"
+    },
+    {
+      "name": "Community",
+      "value": "Community"
+    },
+    {
+      "name": "Game",
+      "value": "Game"
+    },
+    {
+      "name": "Live",
+      "value": "Live"
+    },
+    {
+      "name": "Teenage",
+      "value": "Teenage"
+    },
+    {
+      "name": "MainItem",
+      "value": "Main Item"
+    },
+    {
+      "name": "MoreItem",
+      "value": "More Item"
     }
   ]
 }
