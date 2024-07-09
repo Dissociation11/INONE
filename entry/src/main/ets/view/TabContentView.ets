@@ -1,9 +1,6 @@
 import { CommonConstants as Common } from '../commons/constants/CommonConstants'
-import { TabBarItem, TabBarMode } from '../model/TabContentModel'
+import { TabBarItem } from '../model/TabContentModel'
 import viewModel, { TabContentViewModel } from '../viewmodel/TabContentViewModel'
-import { HomeView } from './HomeView'
-import { MineView } from './MineView'
-import { ShortFormView } from './ShortFormView'
 
 
 //应用主界面
@@ -12,11 +9,12 @@ import { ShortFormView } from './ShortFormView'
 export struct TabContentView{
   @State viewModel : TabContentViewModel = viewModel
 
-  @Builder TabItemBuilder(item:TabBarItem , index : number){
+
+  @Builder TabItemBuilder(item : TabBarItem , selected : boolean){
 
     Column(){
 
-      Image(this.viewModel.currentIndex === index ? item.selectedIcon : item.defaultIcon)
+      Image(selected ? item.selectedIcon : item.defaultIcon)
         .width("24vp")
         .aspectRatio(1)
       Text(item.name)
@@ -32,40 +30,26 @@ export struct TabContentView{
 
     Column(){
 
-      Tabs({barPosition : BarPosition.End , index : this.viewModel.currentIndex}){
+      Tabs({barPosition : BarPosition.End , index : viewModel.currentIndex}){
 
-        ForEach(viewModel.getTabInfo(),(item : TabBarItem ,index)=>{
+        ForEach(viewModel.getTabInfo(),(tabBarItem : TabBarItem , ind : number)=>{
 
           TabContent(){
 
             Column(){
-
-              if(item.mode == TabBarMode.Home)
-              {
-
-                HomeView()
-
-              }else if(item.mode == TabBarMode.ShortForm){
-
-                ShortFormView()
-
-              }else if(item.mode == TabBarMode.Mine){
-
-                MineView()
-
-              }
-
+              Text(tabBarItem.name)
+              Text(ind.toString())
+              Text(viewModel.currentIndex.toString())
             }
 
-          }.tabBar(this.TabItemBuilder(item , index))
+          }.tabBar(this.TabItemBuilder(tabBarItem,ind == viewModel.currentIndex))
 
         })
 
       }.barHeight("10%")
       .backgroundColor(Color.White)
-      .animationDuration(300)
-      .onAnimationStart((index:number,targetIndex:number,event:TabsAnimationEvent)=>{
-        this.viewModel.currentIndex = targetIndex
+      .onChange((index : number) => {
+        viewModel.currentIndex = index
       })
 
     }.size({
