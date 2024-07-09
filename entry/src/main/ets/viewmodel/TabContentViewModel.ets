@@ -1,18 +1,16 @@
 import { TabBarInfo, TabBarItem } from '../model/TabContentModel'
 
-export class TabContentViewModel{
+export class TabContentViewModel {
 
-  private tabList : TabBarItem[] = TabBarInfo;
-  currentIndex : number = 0;
+  //底部导航栏信息
+  private tabList: TabBarItem[] = TabBarInfo;
 
-  getTabInfo() : TabBarItem[] {
+  //当前导航栏项
+  currentIndex: number = 0;
+
+  getTabInfo(): TabBarItem[] {
     return this.tabList
   }
-
-}
-
-enum TabBar{
-
 }
 
 export default new TabContentViewModel()

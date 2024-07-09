@@ -1,6 +1,8 @@
+
 @Component
 export struct HomeView{
+
   build() {
-    Text("Home")
+    Text("home")
   }
 }
