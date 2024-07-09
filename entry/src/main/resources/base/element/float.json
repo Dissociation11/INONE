@@ -383,6 +383,10 @@
     {
       "name": "video_col_padding",
       "value": "10vp"
+    },
+    {
+      "name": "tabbar_icon_size",
+      "value": "32vp"
     }
   ]
 }

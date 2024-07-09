@@ -140,5 +140,8 @@ export class CommonConstants{
    */
   static readonly TEN: number = 10;
 
+  //空行常用百分比
+  static readonly SPACE_PERCENT : string = "4%"
+
 
 }

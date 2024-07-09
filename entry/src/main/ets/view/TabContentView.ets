@@ -12,12 +12,13 @@ import { ShortFormView } from './ShortFormView'
 export struct TabContentView{
   @State viewModel : TabContentViewModel = viewModel
 
+  //底部导航栏内容框
   @Builder TabItemBuilder(item:TabBarItem , index : number){
 
     Column(){
 
       Image(this.viewModel.currentIndex === index ? item.selectedIcon : item.defaultIcon)
-        .width("24vp")
+        .width($r("app.float.tabbar_icon_size"))
         .aspectRatio(1)
       Text(item.name)
 
@@ -25,8 +26,6 @@ export struct TabContentView{
     .justifyContent(FlexAlign.Center)
 
   }
-
-
 
   build(){
 
@@ -42,15 +41,15 @@ export struct TabContentView{
 
               if(item.mode == TabBarMode.Home)
               {
-
+                //主页
                 HomeView()
 
               }else if(item.mode == TabBarMode.ShortForm){
-
+                //短视频
                 ShortFormView()
 
               }else if(item.mode == TabBarMode.Mine){
-
+                //个人中心
                 MineView()
 
               }
@@ -62,7 +61,7 @@ export struct TabContentView{
         })
 
       }.barHeight("10%")
-      .backgroundColor(Color.White)
+      .backgroundColor($r("app.color.tabbar_background_color"))
       .animationDuration(300)
       .onAnimationStart((index:number,targetIndex:number,event:TabsAnimationEvent)=>{
         this.viewModel.currentIndex = targetIndex
@@ -71,15 +70,6 @@ export struct TabContentView{
     }.size({
       height : Common.FULL_PERCENT,
       width : Common.FULL_PERCENT })
-    .backgroundColor($r("app.color.main_background_color"))
-
-  }
-}
-
-@Preview
-@Component
-struct pre{
-  build() {
 
   }
 }
