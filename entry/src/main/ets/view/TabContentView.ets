@@ -61,7 +61,7 @@ export struct TabContentView{
         })
 
       }.barHeight("10%")
-      .backgroundColor($r("app.color.tabbar_background_color"))
+      .backgroundColor($r("app.color.main_background_color"))
       .animationDuration(300)
       .onAnimationStart((index:number,targetIndex:number,event:TabsAnimationEvent)=>{
         this.viewModel.currentIndex = targetIndex
