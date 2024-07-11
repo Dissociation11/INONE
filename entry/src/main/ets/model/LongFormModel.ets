@@ -1,6 +1,6 @@
 export interface LongFormModel{
   videoUrl : string
-  imageUrl : string
+  imageUrl : string // 封面
   title : string
   description : string
   author : string
@@ -26,6 +26,13 @@ export const LongFormModelList : LongFormModel[] = [
     imageUrl: "app.media.test",
     title : "沙漠旅途",
     description : "讲述了一个人的沙漠之旅",
+    author : "李四"
+  },
+  {
+    videoUrl : "http://121.199.75.7:8086/WeChat_20240612195719.mp4",
+    imageUrl: "app.media.test",
+    title : "网络视频测试",
+    description : "这是一个网络视频",
     author : "李四"
   },
 ]

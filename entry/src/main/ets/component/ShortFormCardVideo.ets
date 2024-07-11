@@ -61,7 +61,7 @@ export struct ShortFormCardVideo{
     }
     .gesture(
       GestureGroup(GestureMode.Exclusive,
-        TapGesture({count:2}).onAction(()=>{
+        TapGesture({count:1}).onAction(()=>{
           if (this.isPlay) {
             this.videoController.pause()
           }
@@ -146,7 +146,7 @@ export struct ShortFormCardVideo{
         })
         .blockSize({width:5,height:5})
         .layoutWeight(1)
-        .selectedColor("#ED6F21")
+        .selectedColor($r("app.color.SYSTEM_BASE_COLOR"))
 
       TimeText({ time: this.duration})
         .margin({

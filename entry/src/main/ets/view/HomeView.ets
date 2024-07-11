@@ -31,11 +31,19 @@ export struct HomeView{
             ForEach(this.list, (video: LongFormModel, index: number) => {
               ListItem() {
                 DefaultCard({ title: video.title, ImageUrl: video.imageUrl, description: video.description,cardId:index})
-
                   .animation({duration:200})
                   .onClick((event:ClickEvent) => {
-                    console.log("x position："+event.windowX)
-                    console.log("y position："+event.windowY)
+                    let paramInfo : LongFormModel = video
+                    router.pushUrl({
+                      url:"pages/LongVideoPage",
+                      params:paramInfo
+                    },router.RouterMode.Standard,(err)=>{
+                      if (err) {
+                        console.log(`Invoke pushUrl failed, code is ${err.code}, message is ${err.message}`)
+                        return;
+                      }
+                      console.info('Invoke pushUrl succeeded.');
+                    })
                   })
               }
             })
