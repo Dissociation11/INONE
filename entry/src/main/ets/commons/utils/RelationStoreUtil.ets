@@ -1,23 +1,7 @@
 import relationStore from '@ohos.data.relationalStore'
 import { ValueType, ValuesBucket } from '@kit.ArkData'
 import { RelationStoreConstant as constant } from '../constants/RelationStoreConstant'
-
-
-export interface User{
-
-  id : number
-
-  userName: string
-
-  passWord: string
-
-  name: string
-
-  phone: string
-
-  role: number
-
-}
+import { User } from '../../model/UserModel'
 
 class RelationStoreUtil{
 
