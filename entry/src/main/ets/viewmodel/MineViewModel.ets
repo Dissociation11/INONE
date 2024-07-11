@@ -1,4 +1,5 @@
 import { MineItem, MineMainItemInfo, MineMoreItemInfo } from '../model/MineModel';
+import  router  from '@ohos.router';
 
 export class MineViewModel{
 
@@ -6,8 +7,11 @@ export class MineViewModel{
 
   MineMainItemList : MineItem[] = MineMainItemInfo;
 
-  //用户是否登录
-  isLogin : boolean = false
+  toLogin(){
+    router.pushUrl({
+      url: 'pages/LoginPage'
+    })
+  }
 
 }
 

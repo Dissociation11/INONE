@@ -1,23 +1,7 @@
 import relationStore from '@ohos.data.relationalStore'
-import { ValueType, ValuesBucket } from '@kit.ArkData'
+import { ValuesBucket } from '@kit.ArkData'
 import { RelationStoreConstant as constant } from '../constants/RelationStoreConstant'
-
-
-export interface User{
-
-  id : number
-
-  userName: string
-
-  passWord: string
-
-  name: string
-
-  phone: string
-
-  role: number
-
-}
+import { User } from '../../model/UserModel'
 
 class RelationStoreUtil{
 
@@ -39,7 +23,7 @@ class RelationStoreUtil{
     }
   }
 
-  async createTable(SQL:string){
+  async execute(SQL:string){
     if(!this.relationDB){
       console.log('log: 数据库未初始化,建表失败')
       return
@@ -87,15 +71,47 @@ class RelationStoreUtil{
         let passWord = result.getString(result.getColumnIndex(constant.PASSWORD))
         let name = result.getString(result.getColumnIndex(constant.NAME))
         let phone = result.getString(result.getColumnIndex(constant.PHONE))
+        let url = result.getString(result.getColumnIndex(constant.URL))
         let role = result.getLong(result.getColumnIndex(constant.ROLE))
-        users.push({id,userName,passWord,name,phone,role})
-        console.info(`date: ${id},${userName},${passWord},${name},${phone},${role}`)
+        users.push({id,userName,passWord,name,url,phone,role})
+        console.info(`date: ${id},${userName},${passWord},${name}.${url},${phone},${role}`)
       }
     }catch(err){
       console.log('log: 查询失败')
       console.error('error: ', JSON.stringify(err))
     }
     return users
+  }
+
+  //获取表中的用户
+  async queryUserByUsername(tableName: string, username: string): Promise<User>{
+    let predicate = new relationStore.RdbPredicates(tableName)
+    predicate.equalTo(constant.USERNAME, username)
+    let user: User = {id: -1, userName: "", passWord: "", name: "",phone: "",url: "",role: 1}
+    if (!this.relationDB) {
+      console.log('log: 数据库未初始化')
+      return user
+    }
+    try{
+      let result = await this.relationDB?.query(predicate)
+      if(result?.goToNextRow()){
+        let id = result.getLong(result.getColumnIndex(constant.ID))
+        let userName = result.getString(result.getColumnIndex(constant.USERNAME))
+        let passWord = result.getString(result.getColumnIndex(constant.PASSWORD))
+        let name = result.getString(result.getColumnIndex(constant.NAME))
+        let url = result.getString(result.getColumnIndex(constant.URL))
+        let phone = result.getString(result.getColumnIndex(constant.PHONE))
+        let role = result.getLong(result.getColumnIndex(constant.ROLE))
+        user = {id,userName,passWord,name,url,phone,role}
+        console.log("log: 查询成功")
+      }else{
+        console.log("log：结果为空")
+      }
+    }catch(err){
+      console.log('log: 查询失败')
+      console.error('error: ', JSON.stringify(err))
+    }
+    return user
   }
 
   //更新表中的数据

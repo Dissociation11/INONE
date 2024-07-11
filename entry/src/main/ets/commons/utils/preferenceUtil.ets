@@ -48,7 +48,7 @@ class PreferenceUtil{
   //向用户首选项中添加key-value
   async putPreferenceValue(key: string, value: preferences.ValueType){
     if(!this.pref){
-      console.log(`${PreferenceConstant.PREFERENCE_NAME} 为初始化`)
+      console.log(`${PreferenceConstant.PREFERENCE_NAME} 未初始化`)
       return
     }
     try{
@@ -58,6 +58,21 @@ class PreferenceUtil{
     }catch(err){
       console.error(`保存preferences[${key} = ${value}]失败`, JSON.stringify(err))
     }
+  }
+
+  async hasKey(key: string): Promise<boolean>{
+    let isExit : boolean = false
+    if(!this.pref){
+      console.log(`${PreferenceConstant.PREFERENCE_NAME} 未初始化`)
+      return isExit
+    }
+    try{
+      isExit = await this.pref.has(key)
+      console.log(`log: ${key} ${isExit? "存在" : "不存在" }`)
+    }catch(err){
+      console.error('error: ' + JSON.stringify(err))
+    }
+    return isExit
   }
 
 }

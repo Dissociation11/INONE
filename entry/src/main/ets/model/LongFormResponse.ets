@@ -103,8 +103,5 @@ export class LongFormData{
     this._url = url
   }
 
-  
-  
-  
 }
 

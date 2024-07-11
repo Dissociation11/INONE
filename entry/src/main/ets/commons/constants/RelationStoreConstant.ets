@@ -34,6 +34,9 @@ export class RelationStoreConstant{
   //name字段
   static readonly NAME = 'NAME'
 
+  //url字段
+  static readonly URL = 'URL'
+
   //phone字段
   static readonly PHONE = 'PHONE'
 
@@ -46,6 +49,7 @@ export class RelationStoreConstant{
     this.USERNAME + ' ' + this.TEXT_CLASS + ' ' + this.NOT_NULL + ',' +
     this.PASSWORD + ' ' + this.TEXT_CLASS + ' ' + this.NOT_NULL + ',' +
     this.NAME + ' ' + this.TEXT_CLASS + ' ' + this.NOT_NULL + ',' +
+    this.URL + ' ' + this.TEXT_CLASS + ',' +
     this.PHONE + ' ' + this.TEXT_CLASS + ' ' + this.NOT_NULL + ',' +
     this.ROLE + ' ' + this.INTEGER_CLASS + ' ' + this.NOT_NULL + ')'
 
