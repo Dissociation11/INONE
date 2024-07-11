@@ -18,15 +18,50 @@ export struct LongFormCard{
         
         Video({
           controller:this.videoController,
-          src:this.longFormModel.videoUrl,
+          src:this.longFormModel.videoUrl.includes("http")?this.longFormModel.videoUrl:$rawfile(this.longFormModel.videoUrl),
           currentProgressRate: this.speed
         })
+          .onFinish(()=>{
+            this.videoController.reset()
+          })
+          .autoPlay(true)
+          .controls(false)  //隐藏控制器
           .width("100%")
           .height(250)
+          .objectFit(ImageFit.Contain)
+          .onUpdate((e?: TimeObject)=>{
+            this.currentTime = e?.time
+          })
+          .onPrepared((e?: DurationObject)=>{
+            if (e?.duration!==undefined) {
+              this.duration = e.duration
+              console.log("duration+"+this.duration)
+              this.ifSliderShow = true
+            }
+
+          })
           .gesture(GestureGroup(GestureMode.Exclusive,
-            TapGesture({count:1})
+            
+            TapGesture({count:2})
               .onAction(()=>{
-                this.ifToolShow = !this.ifToolShow
+                if (this.isPlay) {
+                  this.videoController.pause()
+                }
+                else {
+                  this.videoController.start()
+                }
+                this.isPlay = !this.isPlay
+              }),
+            LongPressGesture()
+              .onAction(()=>{
+              this.speed = 3
+                console.log("LongPress")
+              })
+              .onActionEnd(()=>{
+                this.speed = 1
+              })
+              .onActionCancel(()=>{
+                this.speed = 1
               })
           ))
         if (this.ifToolShow) {
@@ -34,6 +69,12 @@ export struct LongFormCard{
           this.sliderBar()
         }
       }
+      .gesture(GestureGroup(GestureMode.Exclusive,
+        TapGesture({count:1})
+          .onAction(()=>{
+            this.ifToolShow = !this.ifToolShow
+          })
+      ))
       Scroll(){
         Tabs(){
           TabContent(){
@@ -62,24 +103,30 @@ export struct LongFormCard{
     }
     .height(30)
     .width(CommonConstants.FULL_PERCENT)
-    .shadow({radius:2,fill:true})
+    .linearGradient({angle:180,colors:[["#ae000000",0],["#25000000",1]]})
   }
 
   @Builder
   sliderBar(){
     Row(){
+      
       TimeText({time:this.currentTime})
         .margin({
           left:$r("app.float.total_time_text_left"),
           right:$r("app.float.total_time_text_right")
         })
-      Slider({ min: 0, max: CommonConstants.PROGRESS_HUNDRED, step: 1, value: this.currentTime })
+      Slider({ min: 0, max: this.duration, step: 0.1, value: this.currentTime })
         .onChange((value: number, mode: SliderChangeMode) => {
-          this.currentTime = value
+          if (this.duration!==undefined)
+          {
+            this.videoController.setCurrentTime(value)
+            this.videoController.start()
+          }
 
         })
+        .selectedColor($r("app.color.SYSTEM_BASE_COLOR"))
         .layoutWeight(1)
-        .selectedColor("#ED6F21")
+        .blockSize({width:5,height:5})
 
       TimeText({ time: this.duration})
         .margin({
@@ -87,8 +134,8 @@ export struct LongFormCard{
           right: $r('app.float.total_time_text_right')
         })
     }
+    .linearGradient({angle:180,colors:[["#25000000",0],["#ae000000",1]]})
     .margin({top:210})
-    .shadow({radius:2,fill:true})
   }
   
 }
@@ -117,14 +164,13 @@ interface TimeObject {
 struct TimeText {
   @Prop time: number;
   build() {
-    Text(this.formatTime(this.time))
+    Text(this.formatTime(Number.parseInt(this.time.toString())))
       .fontSize($r('app.float.time_font'))
       .fontColor(Color.White)
       .lineHeight($r('app.float.time_text_line'))
       .width($r('app.float.time_text_width'))
   }
   formatTime(duration: number): string {
-    // let totalSecond: number = Math.round(duration / CommonConstants.PROGRESS_HUNDRED);
 
     let hourNum: number = Math.floor(duration / CommonConstants.SECOND_IN_HOUR);
     let minNum: number = Math.floor((duration % CommonConstants.SECOND_IN_HOUR) / CommonConstants.SECOND_IN_MINUTE);
