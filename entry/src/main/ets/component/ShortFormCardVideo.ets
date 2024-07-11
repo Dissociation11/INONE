@@ -10,7 +10,7 @@ export struct ShortFormCardVideo{
   videoController : VideoController = new VideoController()
   @State isPlay : boolean = true
   @State speed : number = 1
-  @State duration : number|undefined = 0
+  @State duration : number = 0
   @State currentTime : number|undefined = 0
   @State ifSliderShow: boolean = false
   currentIndexChange(){
@@ -45,9 +45,12 @@ export struct ShortFormCardVideo{
           this.currentTime = e?.time
         })
         .onPrepared((e?: DurationObject)=>{
-          this.duration = e?.duration
-          console.log("duration+"+this.duration)
-          this.ifSliderShow = true
+          if (e?.duration!==undefined) {
+            this.duration = e.duration
+            console.log("duration+"+this.duration)
+            this.ifSliderShow = true
+          }
+          
         })
       this.formAction()
       this.videoInformation()
@@ -128,16 +131,20 @@ export struct ShortFormCardVideo{
   @Builder
   sliderBar(){
     Row(){
-      TimeText({time:this.currentTime})
+      TimeText({time:(this.currentTime)})
         .margin({
           left:$r("app.float.total_time_text_left"),
           right:$r("app.float.total_time_text_right")
         })
-      Slider({ min: 0, max: CommonConstants.PROGRESS_HUNDRED, step: 1, value: this.currentTime })
+      Slider({ min: 0, max: this.duration, step: 0.1, value: this.currentTime })
         .onChange((value: number, mode: SliderChangeMode) => {
-          // this.slideCurrent = value
-          
+          if (this.duration!==undefined)
+          {
+            this.videoController.setCurrentTime(value)
+            this.videoController.start()
+          }
         })
+        .blockSize({width:5,height:5})
         .layoutWeight(1)
         .selectedColor("#ED6F21")
 
@@ -164,7 +171,7 @@ interface TimeObject {
 struct TimeText {
   @Prop time: number;
   build() {
-    Text(this.formatTime(this.time))
+    Text(this.formatTime(Number.parseInt(this.time.toString())))
       .fontSize($r('app.float.time_font'))
       .fontColor(Color.White)
       .lineHeight($r('app.float.time_text_line'))

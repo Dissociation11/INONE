@@ -3,6 +3,7 @@
     "pages/MainPage",
     "pages/Login",
     "pages/Register",
-    "pages/Transition"
+    "pages/Transition",
+    "pages/LongVideoPage"
   ]
 }
