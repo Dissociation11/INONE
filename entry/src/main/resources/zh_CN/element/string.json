@@ -27,6 +27,50 @@
     {
       "name": "Mine",
       "value": "我的"
+    },
+    {
+      "name": "Radio",
+      "value": "听视频"
+    },
+    {
+      "name": "Setting",
+      "value": "设置"
+    },
+    {
+      "name": "Help",
+      "value": "客服"
+    },
+    {
+      "name": "Cartoon",
+      "value": "漫画"
+    },
+    {
+      "name": "Commonweal",
+      "value": "公益"
+    },
+    {
+      "name": "Community",
+      "value": "社区"
+    },
+    {
+      "name": "Game",
+      "value": "游戏"
+    },
+    {
+      "name": "Live",
+      "value": "直播"
+    },
+    {
+      "name": "Teenage",
+      "value": "青少年守护"
+    },
+    {
+      "name": "MainItem",
+      "value": "推荐服务"
+    },
+    {
+      "name": "MoreItem",
+      "value": "更多服务"
     }
   ]
 }
