@@ -1,3 +1,7 @@
+import { http } from '@kit.NetworkKit'
+import { RequestTool } from '../commons/utils/RequestTool'
+import { LongFormData, LongFormResponse } from './LongFormResponse'
+
 export interface LongFormModel{
   videoUrl : string
   imageUrl : string // 封面
@@ -5,6 +9,43 @@ export interface LongFormModel{
   description : string
   author : string
   
+}
+export class LongForm implements LongFormModel {
+  videoUrl: string
+  imageUrl: string
+  title: string
+  description: string
+  author: string
+  constructor(videoUrl: string, imageUrl: string, title: string, description: string, author: string) {
+    this.videoUrl = videoUrl
+    this.imageUrl = imageUrl
+    this.title = title
+    this.description = description
+    this.author = author
+  }
+
+  async getLongFormList(){
+    let longFromResults : LongFormModel[] = []
+    await RequestTool.request("http://192.168.31.46:8800/admin/sysUser/getVideoList",http.RequestMethod.GET)
+      .then((res)=>{
+        let resResponse:LongFormResponse = res as LongFormResponse
+        
+        if (resResponse.data!==undefined) {
+          for (let index = 0; index < resResponse.data.length; index++) {
+            const element = resResponse.data[index];
+            let longFromResult : LongFormModel = new LongForm(element.url as string,element.imageUrl as string,element.title as string,element.description as string,element.author as string)
+            longFromResults.push(longFromResult)
+          }
+        }
+        console.log(`longFromResults : LongFormModel[] = ${JSON.stringify(longFromResults)}`)
+        return longFromResults
+      })
+      .catch((err:Error)=>{
+        console.log(`err:${err.message}`)
+      })
+    console.log(`longFromResults : LongFormModel[] = ${JSON.stringify(longFromResults)}`)
+    return longFromResults
+  }
 }
 export const LongFormModelList : LongFormModel[] = [
   {
@@ -36,3 +77,5 @@ export const LongFormModelList : LongFormModel[] = [
     author : "李四"
   },
 ]
+
+export default new LongForm("","","","","")

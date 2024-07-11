@@ -21,7 +21,7 @@ export struct DefaultCard {
 
       Column() {
         Row() {
-          Image($r(this.ImageUrl))
+          Image( this.ImageUrl.includes("http")?this.ImageUrl:$r(this.ImageUrl))
             .width("100%")
             .borderRadius(10)
         }

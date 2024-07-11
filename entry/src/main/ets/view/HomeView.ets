@@ -1,11 +1,14 @@
 import { DefaultCard } from '../component/DefaultCard'
 import { DefaultSwiper } from '../component/HomeSwiper'
 import { LongFormModel, LongFormModelList } from '../model/LongFormModel'
+
 import { router } from '@kit.ArkUI'
+import  LongForm  from '../model/LongFormModel'
+import { LongFormData, LongFormResponse } from '../model/LongFormResponse'
 
 @Component
 export struct HomeView{
-  private list : LongFormModel[] = LongFormModelList
+  @State list : LongFormModel[] = []
   swiperController: SwiperController = new SwiperController()
   // 卡片信息
   @State clickCardId : number = -1
@@ -15,6 +18,14 @@ export struct HomeView{
   @State cardPosition_y : Length|undefined = 0
   @State cardGlobalPosition_x : Length|undefined = 0
   @State cardGlobalPosition_y : Length|undefined = 0
+  @State requestDataList : LongFormData[] = []
+
+  async aboutToAppear(): Promise<void> {
+    console.log(`test:apear`)
+    this.list = await LongForm.getLongFormList()
+    console.log(`info:: ${JSON.stringify(this.list)}`)
+  }
+  
   build() {
     Column(){
       this.CardList()
