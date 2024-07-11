@@ -73,7 +73,7 @@ struct Login {
               Prompt.showToast({message:"请勾选用户协议和隐私政策"})
               return
             }
-            if(this.username === "admin" && this.password === "123456") {
+            if(this.username === "" && this.password === "") {
               router.pushUrl({
                 url: 'pages/Transition',
                 params: {
