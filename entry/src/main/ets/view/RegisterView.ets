@@ -1,5 +1,7 @@
 import { RegisterViewModel } from '../viewmodel/RegisterViewModel'
-
+import { ValuesBucket } from '@kit.ArkData'
+import userViewModel, { UserViewModel} from '../viewmodel/UserViewModel'
+import { router } from '@kit.ArkUI'
 
 @CustomDialog
 export struct CustomDialogExample {
@@ -21,8 +23,8 @@ export struct CustomDialogExample {
 
 @Component
 export struct RegisterView{
-
   @State viewModel: RegisterViewModel = new RegisterViewModel()
+  @StorageLink("UserViewModel") userViewModel:UserViewModel  = userViewModel
 
   dialogController: CustomDialogController = new CustomDialogController({
     builder: CustomDialogExample(),
@@ -45,7 +47,7 @@ export struct RegisterView{
           .height(60)
           .backgroundColor('#395e5d64')
           .onChange((value: string) => {
-            this.viewModel.phone = value
+            this.viewModel.username = value
           })
       }
 
@@ -113,7 +115,20 @@ export struct RegisterView{
         .margin({ top: 30 })
         .backgroundColor($r('app.color.LOGIN_COLOR'))
         .onClick(() => {
-
+          this.viewModel.register().then((isOk) => {
+            if(isOk){
+              let value: ValuesBucket = {
+                'USERNAME': this.viewModel.username,
+                'PASSWORD': this.viewModel.password,
+                'NAME': this.viewModel.phone,
+                'URL': '',
+                'PHONE': this.viewModel.phone,
+                'ROLE': 1
+              }
+              this.userViewModel.register(value)
+              router.back()
+            }
+          })
         })
     }
     .width('100%')

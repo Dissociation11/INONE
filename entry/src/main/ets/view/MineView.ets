@@ -58,7 +58,7 @@ export struct MineView{
       Spacer({spaceHeight : Common.FULL_PERCENT , spaceWidth : Common.SPACE_PERCENT})
 
       Column() {
-        Text(this.userViewModel.isLogin ? "用户名" : $r("app.string.NotLogin")).fontSize(28)
+        Text(this.userViewModel.isLogin ? this.userViewModel.currentUser?.userName : $r("app.string.NotLogin")).fontSize(28)
         Text(this.userViewModel.isLogin ? $r("app.string.ClickTOInformation") : $r("app.string.ClickToLogin")).fontSize(20)
       }.size({height : "65%"})
       .justifyContent(FlexAlign.SpaceBetween)
@@ -67,7 +67,7 @@ export struct MineView{
     }.size({height : "15%", width : Common.FULL_PERCENT})
     .onClick(() => {
       if(this.userViewModel.isLogin){
-        this.userViewModel.Login()
+        this.userViewModel.signOut()
       }else{
         this.viewModel.toLogin()
       }

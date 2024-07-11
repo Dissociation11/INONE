@@ -9,25 +9,30 @@ export class RegisterViewModel{
   captcha: string = ''
   isSelected: boolean = false
 
-  register(){
+  async register(){
     if(!this.isSelected){
       Prompt.showToast({message:"请勾选《xxx用户协议》和《隐私政策》"})
-      return
-    }if(this.username !== ''){
-      if(this.password !== ''){
-        if( this.captcha !== ''){
-          Prompt.showToast({message:"注册成功！"})
-          router.back()
-        }else{
-          Prompt.showToast({message:"请输入验证码！"})
-        }
-      }else{
-        Prompt.showToast({message:"请输入验证码和密码！"})
-      }
+      return false
     }
-    else{
-      Prompt.showToast({message:"请输入手机号,验证码和密码！"})
+    if(this.phone.length != 11){
+      Prompt.showToast({message: '请输入正确得手机号'})
+      return false
     }
+    if(this.username == ''){
+      Prompt.showToast({message:"请输入用户名"})
+      return false
+    }else if(this.password == ''){
+      Prompt.showToast({message:"请输入密码"})
+      return false
+    }else if(this.captcha == ''){
+      Prompt.showToast({message:"请输入验证码"})
+      return false
+    }
+    if(this.captcha != '123456'){
+      Prompt.showToast({message:"验证码错误"})
+      return false
+    }
+    return true
   }
 
 }

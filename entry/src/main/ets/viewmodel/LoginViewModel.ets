@@ -1,6 +1,5 @@
 import  router  from '@ohos.router';
 import Prompt from '@system.prompt';
-import { resourceManager } from '@kit.LocalizationKit';
 
 export class LoginViewModel{
   username: string = ''
@@ -9,26 +8,23 @@ export class LoginViewModel{
 
   clickRegister(){
     router.pushUrl({
-      url:'pages/RegisterPage'
+      url: 'pages/RegisterPage'
     })
   }
 
-  clickLogin(){
+  async clickLogin(){
     if(!this.isSelected){
       Prompt.showToast({message: '请勾选用户协议和隐私政策'})
-      return
+      return false
     }
-    if(this.username === "" && this.password === "") {
-      router.replaceUrl({
-        url: 'pages/Transition',
-        params: {
-          username: this.username,
-          password: this.password
-        }
-      })
-    } else {
-      Prompt.showToast({message:"账号或密码错误！"})
+    if(this.username == ''){
+      Prompt.showToast({message: '用户名不可为空'})
+      return false
+    }else if(this.password == ''){
+      Prompt.showToast({message: '密码不可为空'})
+      return false
     }
+    return true
   }
 
   forgetPassword(){

@@ -1,9 +1,12 @@
 import Prompt from '@system.prompt';
 import { LoginViewModel } from '../viewmodel/LoginViewModel'
+import userViewModel, { UserViewModel} from '../viewmodel/UserViewModel'
+import { router } from '@kit.ArkUI';
 
 @Component
 export struct LoginView{
-@State viewModel: LoginViewModel = new LoginViewModel()
+  @State viewModel: LoginViewModel = new LoginViewModel()
+  @StorageLink("UserViewModel") userViewModel:UserViewModel  = userViewModel
 
   build(){
     Column(){
@@ -66,7 +69,17 @@ export struct LoginView{
         .margin({ top : 30})
         .backgroundColor($r('app.color.LOGIN_COLOR'))
         .onClick(() => {
-          this.viewModel.clickLogin()
+          this.viewModel.clickLogin().then((loginFlag)=>{
+            if(loginFlag) {
+              this.userViewModel.login(this.viewModel.username, this.viewModel.password).then((isOk) => {
+                if (isOk) {
+                  router.replaceUrl({
+                    url: 'pages/Transition'
+                  })
+                }
+              })
+            }
+          })
         })
 
       Row(){

@@ -16,7 +16,7 @@ export default class EntryAbility extends UIAbility {
 
   onWindowStageCreate(windowStage: window.WindowStage): void {
     RelationStoreUtil.loadRdbStore(this.context).then(()=>{
-      RelationStoreUtil.createTable(RelationStoreConstant.CREATE_TABLE_SQL).then(()=>{
+      RelationStoreUtil.execute(RelationStoreConstant.CREATE_TABLE_SQL).then(()=>{
         RelationStoreUtil.databaseTableInfo(RelationStoreConstant.USER_TABLE_NAME)
       })
     })

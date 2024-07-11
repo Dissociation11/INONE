@@ -12,6 +12,9 @@ export interface User{
   //用户昵称
   name: string
 
+  //头像url
+  url: string
+
   //手机号
   phone: string
 
