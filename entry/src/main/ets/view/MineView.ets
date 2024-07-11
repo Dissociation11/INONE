@@ -2,11 +2,20 @@ import { CommonConstants as Common } from '../commons/constants/CommonConstants'
 import { Spacer } from '../component/Spacer';
 import { MineItem } from '../model/MineModel';
 import viewModel, {MineViewModel} from '../viewmodel/MineViewModel'
+import userViewModel, { UserViewModel} from '../viewmodel/UserViewModel'
+
 
 @Component
 export struct MineView{
 
-  @State viewModel : MineViewModel = viewModel;
+  @State viewModel: MineViewModel = viewModel
+  @StorageLink("UserViewModel") userViewModel:UserViewModel  = userViewModel
+
+  aboutToAppear(): void {
+
+    this.userViewModel.initViewModel()
+
+  }
 
   //空行
   @Builder Spacer(){
@@ -35,36 +44,6 @@ export struct MineView{
 
   }
 
-  //用户未登录信息栏
-  @Builder UserNotLoginBuilder(){
-
-    Row() {
-
-      Spacer({spaceHeight : Common.FULL_PERCENT , spaceWidth : "7%"})
-
-
-      Image($r("app.media.user_not_login")).size({ height: "85%" })
-        .borderRadius(90)
-        .borderColor(Color.Gray)
-        .borderWidth(5)
-
-      Spacer({spaceHeight : Common.FULL_PERCENT , spaceWidth : "5%"})
-
-      Column() {
-        Text("未登录").fontSize(28)
-        Text("点击此处前往登录").fontSize(20)
-      }.size({height : "65%"})
-      .justifyContent(FlexAlign.SpaceBetween)
-      .alignItems(HorizontalAlign.Start)
-
-
-    }.size({height : "15%", width : Common.FULL_PERCENT})
-    .onClick(() => {
-      this.viewModel.isLogin = !this.viewModel.isLogin
-    })
-
-  }
-
   //登录用户简要信息栏
   @Builder UserInfoBarBuilder(){
 
@@ -73,21 +52,25 @@ export struct MineView{
       Spacer({spaceHeight : Common.FULL_PERCENT , spaceWidth : "7%"})
 
 
-      Image($r("app.media.placeholder_image")).size({ height: "85%" })
+      Image(this.userViewModel.isLogin ? "http://10.33.34.177:8800/ImgLib/c3f36b77-6e56-4465-b3bc-e0445c38530c.jpg" : $r("app.media.user_not_login")).size({ height: "85%" })
         .borderRadius(90)
 
       Spacer({spaceHeight : Common.FULL_PERCENT , spaceWidth : Common.SPACE_PERCENT})
 
       Column() {
-        Text("用户名").fontSize(28)
-        Text("点击查看个人信息").fontSize(20)
+        Text(this.userViewModel.isLogin ? "用户名" : $r("app.string.NotLogin")).fontSize(28)
+        Text(this.userViewModel.isLogin ? $r("app.string.ClickTOInformation") : $r("app.string.ClickToLogin")).fontSize(20)
       }.size({height : "65%"})
       .justifyContent(FlexAlign.SpaceBetween)
       .alignItems(HorizontalAlign.Start)
 
     }.size({height : "15%", width : Common.FULL_PERCENT})
     .onClick(() => {
-      this.viewModel.isLogin = !this.viewModel.isLogin
+      if(this.userViewModel.isLogin){
+        this.userViewModel.Login()
+      }else{
+        this.viewModel.toLogin()
+      }
     })
 
   }
@@ -112,18 +95,12 @@ export struct MineView{
   //信息提示栏
   @Builder tipsBar(message : Resource){
     Column(){
-
       this.Spacer()
-
       Row(){
-
         Spacer({spaceWidth : Common.SPACE_PERCENT})
-
         Text(message).fontSize(24)
           .fontColor(Color.Black)
-
       }
-
     }.size({width : Common.FULL_PERCENT})
     .alignItems(HorizontalAlign.Start)
   }
@@ -187,11 +164,7 @@ export struct MineView{
       this.TopBar()
 
       //用户简要信息栏
-      if(this.viewModel.isLogin) {
-        this.UserInfoBarBuilder()
-      }else{
-        this.UserNotLoginBuilder()
-      }
+      this.UserInfoBarBuilder()
 
       this.Spacer()
 
@@ -219,7 +192,7 @@ export struct MineView{
         }
 
         //更多服务信息
-        ForEach(this.viewModel.MineMoreItemList , (item : MineItem) => {
+        ForEach(this.viewModel.MineMoreItemList, (item : MineItem) => {
           this.MineMoreItem(item)
         })
 

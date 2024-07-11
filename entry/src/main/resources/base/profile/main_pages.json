@@ -1,8 +1,8 @@
 {
   "src": [
     "pages/MainPage",
-    "pages/Login",
-    "pages/Register",
+    "pages/LoginPage",
+    "pages/RegisterPage",
     "pages/Transition",
     "pages/LongVideoPage"
   ]
