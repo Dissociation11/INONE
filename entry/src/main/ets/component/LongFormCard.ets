@@ -1,6 +1,7 @@
 import { CommonConstants } from '../commons/constants/CommonConstants'
 import { LongFormModel, LongFormModelList } from '../model/LongFormModel'
 import { router } from '@kit.ArkUI'
+import { LongFormData } from '../model/LongFormResponse'
 
 @Component
 export struct LongFormCard{
@@ -18,7 +19,7 @@ export struct LongFormCard{
         
         Video({
           controller:this.videoController,
-          src:this.longFormModel.videoUrl.includes("http")?this.longFormModel.videoUrl:$rawfile(this.longFormModel.videoUrl),
+          src:this.longFormModel.videoUrl!==undefined && this.longFormModel.videoUrl.includes("http")?this.longFormModel.videoUrl:$rawfile(this.longFormModel.videoUrl),
           currentProgressRate: this.speed
         })
           .onFinish(()=>{
@@ -138,19 +139,6 @@ export struct LongFormCard{
     .margin({top:210})
   }
   
-}
-
-@Preview
-@Component
-struct pre{
-  list : LongFormModel[] = LongFormModelList
-  build() {
-    Column(){
-      LongFormCard({longFormModel:this.list.pop()})
-    }
-    .width("100%")
-    .height("100%")
-  }
 }
 
 interface DurationObject {
