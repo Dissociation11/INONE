@@ -71,6 +71,74 @@
     {
       "name": "MoreItem",
       "value": "更多服务"
+    },
+    {
+      "name": "NotLogin",
+      "value": "未登录"
+    },
+    {
+      "name": "ClickToLogin",
+      "value": "点击此处前往登录"
+    },
+    {
+      "name": "ClickTOInformation",
+      "value": "点击查看个人信息"
+    },
+    {
+      "name": "PleaseTick",
+      "value": "请勾选"
+    },
+    {
+      "name": "UserAgreement",
+      "value": "《用户协议》"
+    },
+    {
+      "name": "And",
+      "value": "和"
+    },
+    {
+      "name": "PrivacyPolicy",
+      "value": "《隐私政策》"
+    },
+    {
+      "name": "Login",
+      "value": "登录"
+    },
+    {
+      "name": "Register",
+      "value": "注册"
+    },
+    {
+      "name": "ForgotPassword",
+      "value": "忘记密码？"
+    },
+    {
+      "name": "UserName",
+      "value": "用户名"
+    },
+    {
+      "name": "Password",
+      "value": "密码"
+    },
+    {
+      "name": "Tips1",
+      "value": "请勾选用户协议和隐私政策"
+    },
+    {
+      "name": "phone",
+      "value": "手机号"
+    },
+    {
+      "name": "Captcha",
+      "value": "验证码"
+    },
+    {
+      "name": "ReadAndAgreen",
+      "value": "我已阅读并同意"
+    },
+    {
+      "name": "GetCaptcha",
+      "value": "获取验证码"
     }
   ]
 }

@@ -71,6 +71,74 @@
     {
       "name": "MoreItem",
       "value": "More Item"
+    },
+    {
+      "name": "NotLogin",
+      "value": "NotLogin"
+    },
+    {
+      "name": "ClickToLogin",
+      "value": "Click to Login"
+    },
+    {
+      "name": "ClickTOInformation",
+      "value": "Click to User Information"
+    },
+    {
+      "name": "PleaseTick",
+      "value": "Please tick"
+    },
+    {
+      "name": "UserAgreement",
+      "value": "User Agreement"
+    },
+    {
+      "name": "And",
+      "value": "and"
+    },
+    {
+      "name": "PrivacyPolicy",
+      "value": "Privacy Policy"
+    },
+    {
+      "name": "Login",
+      "value": "login"
+    },
+    {
+      "name": "Register",
+      "value": "register"
+    },
+    {
+      "name": "ForgotPassword",
+      "value": "Forgot your password?"
+    },
+    {
+      "name": "UserName",
+      "value": "UserName"
+    },
+    {
+      "name": "Password",
+      "value": "Password"
+    },
+    {
+      "name": "Tips1",
+      "value": "Please check the User Agreement and Privacy Policy"
+    },
+    {
+      "name": "phone",
+      "value": "phone number"
+    },
+    {
+      "name": "Captcha",
+      "value": "captcha"
+    },
+    {
+      "name": "ReadAndAgreen",
+      "value": "Alread read and agree"
+    },
+    {
+      "name": "GetCaptcha",
+      "value": "Get captcha"
     }
   ]
 }

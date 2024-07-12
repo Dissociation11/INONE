@@ -225,6 +225,7 @@ interface DurationObject {
 interface TimeObject {
   time: number;
 }
+
 @Component
 struct TimeText {
   @Prop time: number;

@@ -11,9 +11,7 @@ struct Transition{
   }
 
   jump(){
-    router.pushUrl({
-      url:"pages/MainPage"
-    })
+    router.back()
   }
 
   build() {

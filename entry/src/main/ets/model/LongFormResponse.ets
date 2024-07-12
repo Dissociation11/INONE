@@ -134,12 +134,5 @@ export class LongFormData{
     this._like_num = like_num
     this._share_num = share_num
   }
-
-  
-  
-
-  
-  
-  
 }
 
