@@ -71,10 +71,14 @@ export struct LoginView{
         .onClick(() => {
           this.viewModel.clickLogin().then((loginFlag)=>{
             if(loginFlag) {
-              this.userViewModel.login(this.viewModel.username, this.viewModel.password).then((isOk) => {
-                if (isOk) {
-                  router.replaceUrl({
-                    url: 'pages/Transition'
+              this.userViewModel.remoteLogin(this.viewModel.username, this.viewModel.password).then((flag)=>{
+                if(flag){
+                  this.userViewModel.login(this.viewModel.username, this.viewModel.password).then((isOk) => {
+                    if (isOk) {
+                      router.replaceUrl({
+                        url: 'pages/Transition'
+                      })
+                    }
                   })
                 }
               })
