@@ -116,17 +116,20 @@ export struct RegisterView{
         .backgroundColor($r('app.color.LOGIN_COLOR'))
         .onClick(() => {
           this.viewModel.register().then((isOk) => {
-            if(isOk){
-              let value: ValuesBucket = {
-                'USERNAME': this.viewModel.username,
-                'PASSWORD': this.viewModel.password,
-                'NAME': this.viewModel.phone,
-                'URL': '',
-                'PHONE': this.viewModel.phone,
-                'ROLE': 1
-              }
-              this.userViewModel.register(value)
-              router.back()
+            if(isOk) {
+              this.userViewModel.remoteRegister(this.viewModel.username, this.viewModel.password, this.viewModel.phone)
+                .then((flag) => {
+                  let value: ValuesBucket = {
+                    'USERNAME': this.viewModel.username,
+                    'PASSWORD': this.viewModel.password,
+                    'NAME': this.viewModel.phone,
+                    'URL': '',
+                    'PHONE': this.viewModel.phone,
+                    'ROLE': 1
+                  }
+                  this.userViewModel.register(value)
+                  router.back()
+                })
             }
           })
         })
