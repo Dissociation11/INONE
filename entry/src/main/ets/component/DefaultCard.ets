@@ -46,23 +46,24 @@ export struct DefaultCard {
       .height(this.cardHeight)
       .margin(5)
       .clip(true)
-      .onTouch((event?:TouchEvent) => {
-        animateTo({ curve: curves.springMotion() }, () => {
-          if (event?.type===TouchType.Down) {
-            console.log("down touch:")
-            this.cardHeight = this.cardHeight * 0.95
-            this.cardWidth = this.cardWidth * 0.95
-            this.fontSize = this.fontSize * 0.95
-          }
-          if (event?.type===TouchType.Up) {
-            console.log("up touch")
-            this.cardHeight = this.cardHeight / 0.95
-            this.cardWidth = this.cardWidth / 0.95
-            this.fontSize = this.fontSize / 0.95
-          }
-          console.log(event?.type.toString())
-        })
-      })
+      .clickEffect({level:ClickEffectLevel.LIGHT})
+      // .onTouch((event?:TouchEvent) => {
+      //   animateTo({ curve: curves.springMotion() }, () => {
+      //     if (event?.type===TouchType.Down) {
+      //       console.log("down touch:")
+      //       this.cardHeight = this.cardHeight * 0.95
+      //       this.cardWidth = this.cardWidth * 0.95
+      //       this.fontSize = this.fontSize * 0.95
+      //     }
+      //     if (event?.type===TouchType.Up) {
+      //       console.log("up touch")
+      //       this.cardHeight = this.cardHeight / 0.95
+      //       this.cardWidth = this.cardWidth / 0.95
+      //       this.fontSize = this.fontSize / 0.95
+      //     }
+      //     console.log(event?.type.toString())
+      //   })
+      // })
 
   }
 }

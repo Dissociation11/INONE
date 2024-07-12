@@ -6,6 +6,7 @@ import { ShortFormModel } from '../model/ShortFormModel'
 export struct ShortFormCardVideo{
   @Prop shortFormModel : ShortFormModel
   @Prop index : number
+  @Prop isLocated:number
   @Prop @Watch("currentIndexChange") currentIndex : number
   videoController : VideoController = new VideoController()
   @State isPlay : boolean = true
@@ -25,13 +26,15 @@ export struct ShortFormCardVideo{
     }
     console.log("当前位置"+this.currentIndex+",当前Index:"+this.index)
   }
+  onAreaChange(event: (oldValue: Area, newValue: Area) => void): CommonAttribute {
+    let attr: CommonAttribute = new CommonAttribute()
+    
+    return attr
+  }
   
   
   build() {
     Stack({ alignContent: Alignment.Bottom}){
-      Text(this.speed !== 1 ? "加速中":"")
-        .fontSize(50)
-        .fontColor(Color.White)
       Video({
         controller:this.videoController,
         src:$rawfile(this.shortFormModel.videoUrl),
@@ -50,14 +53,15 @@ export struct ShortFormCardVideo{
             console.log("duration+"+this.duration)
             this.ifSliderShow = true
           }
-          
         })
-      this.formAction()
+        .onAreaChange((oldValue,newValue)=>{
+          console.log(`短视频页面变化`)
+        })
       this.videoInformation()
       if (this.ifSliderShow){
         this.sliderBar()
       }
-      
+      this.formAction()
     }
     .gesture(
       GestureGroup(GestureMode.Exclusive,
@@ -92,7 +96,7 @@ export struct ShortFormCardVideo{
       Image($r('app.media.like'))
         .width(30)
         .height(30)
-      Text("999")
+      Text(this.shortFormModel.like_num.toString())
         .fontColor(Color.White)
         .margin({ bottom:10 })
       Image($r('app.media.comment'))
@@ -104,7 +108,8 @@ export struct ShortFormCardVideo{
       Image($r('app.media.share'))
         .width(30)
         .height(30)
-      Text("99")
+      Text(this.shortFormModel.share_num.toString())
+        .fontColor(Color.White)
     }.width('100%')
     .height('100%')
     .margin({ right: 20 })

@@ -5,7 +5,7 @@ import { ShortFormModel, ShortFormModelList } from '../model/ShortFormModel'
 
 @Component
 export struct ShortFormView{
-  
+  @Prop currentIndex:number
   @State currentSelect:number = 0
   build() {
     Swiper(){
