@@ -1,8 +1,11 @@
 import { CommonConstants as Common } from '../commons/constants/CommonConstants'
 import { Spacer } from '../component/Spacer';
-import { MineItem } from '../model/MineModel';
+import { MineItem, MineItemMode } from '../model/MineModel';
 import viewModel, {MineViewModel} from '../viewmodel/MineViewModel'
 import userViewModel, { UserViewModel} from '../viewmodel/UserViewModel'
+import { Prompt, router } from '@kit.ArkUI';
+import PreferenceUtil from '../commons/utils/preferenceUtil'
+import { PreferenceConstant } from '../commons/constants/PreferenceConstant'
 
 
 @Component
@@ -10,6 +13,7 @@ export struct MineView{
 
   @State viewModel: MineViewModel = viewModel
   @StorageLink("UserViewModel") userViewModel:UserViewModel  = userViewModel
+  @StorageLink("isDark") isDark: boolean = false
 
   aboutToAppear(): void {
 
@@ -31,10 +35,16 @@ export struct MineView{
 
       Row(){
 
-        Image($r("app.media.dark_mode"))
+        Image(this.isDark ? $r('app.media.light_mode') :$r("app.media.dark_mode"))
           .size({height : Common.FULL_PERCENT})
 
-        Text("夜间模式").fontSize(20)
+        Text(this.isDark ? "明亮模式" : "夜间模式")
+          .fontColor(this.isDark ? $r('app.color.DARK_FONT') : $r('app.color.DEFAULT_FONT'))
+          .fontSize(20)
+          .onClick(() => {
+            this.isDark = !this.isDark
+            PreferenceUtil.putPreferenceValue(PreferenceConstant.IS_DARK,this.isDark)
+          })
 
         Spacer({spaceWidth : Common.SPACE_PERCENT})
 
@@ -59,7 +69,9 @@ export struct MineView{
 
       Column() {
         Text(this.userViewModel.isLogin ? this.userViewModel.currentUser?.userName : $r("app.string.NotLogin")).fontSize(28)
+          .fontColor(this.isDark ? $r('app.color.DARK_FONT') : $r('app.color.DEFAULT_FONT'))
         Text(this.userViewModel.isLogin ? $r("app.string.ClickTOInformation") : $r("app.string.ClickToLogin")).fontSize(20)
+          .fontColor(this.isDark ? $r('app.color.DARK_FONT') : $r('app.color.DEFAULT_FONT'))
       }.size({height : "65%"})
       .justifyContent(FlexAlign.SpaceBetween)
       .alignItems(HorizontalAlign.Start)
@@ -67,7 +79,7 @@ export struct MineView{
     }.size({height : "15%", width : Common.FULL_PERCENT})
     .onClick(() => {
       if(this.userViewModel.isLogin){
-        this.userViewModel.signOut()
+        this.viewModel.toInformation()
       }else{
         this.viewModel.toLogin()
       }
@@ -81,11 +93,19 @@ export struct MineView{
     Row(){
 
       Text("关注")
+        .fontColor(this.isDark ? $r('app.color.DARK_FONT') : $r('app.color.DEFAULT_FONT'))
+        .onClick(() => {
+          Prompt.showToast({ message: '暂未开放功能' })
+        })
 
       Line().size({height : 30, width : 1})
         .backgroundColor(Color.Black)
 
       Text("收藏")
+        .fontColor(this.isDark ? $r('app.color.DARK_FONT') : $r('app.color.DEFAULT_FONT'))
+        .onClick(() => {
+        Prompt.showToast({ message: '暂未开放功能' })
+      })
 
     }.size({width : "90%"})
     .justifyContent(FlexAlign.SpaceEvenly)
@@ -99,7 +119,7 @@ export struct MineView{
       Row(){
         Spacer({spaceWidth : Common.SPACE_PERCENT})
         Text(message).fontSize(24)
-          .fontColor(Color.Black)
+          .fontColor(this.isDark ? $r('app.color.DARK_FONT') : $r('app.color.DEFAULT_FONT'))
       }
     }.size({width : Common.FULL_PERCENT})
     .alignItems(HorizontalAlign.Start)
@@ -117,8 +137,11 @@ export struct MineView{
         Image(item.icon).size({height : Common.SPACE_PERCENT})
 
         Text(item.name).fontSize(16)
+          .fontColor(this.isDark ? $r('app.color.DARK_FONT') : $r('app.color.DEFAULT_FONT'))
 
-      }
+      }.onClick(() => {
+        Prompt.showToast({ message: '暂未开放功能' })
+      })
 
     }
 
@@ -143,6 +166,7 @@ export struct MineView{
             Spacer({spaceHeight : Common.FULL_PERCENT , spaceWidth : Common.SPACE_PERCENT})
 
             Text(item.name).fontSize(20)
+              .fontColor(this.isDark ? $r('app.color.DARK_FONT') : $r('app.color.DEFAULT_FONT'))
 
           }.size({height : Common.FULL_PERCENT})
 
@@ -153,6 +177,16 @@ export struct MineView{
         .justifyContent(FlexAlign.SpaceBetween)
 
       }.size({ width : Common.FULL_PERCENT})
+      .onClick(() => {
+        if(item.mode == MineItemMode.Setting)
+        {
+          router.pushUrl({
+            url: 'pages/SettingPage'
+          })
+        }else{
+          Prompt.showToast({ message: '暂未开放功能' })
+        }
+      })
     }
   }
 
@@ -200,7 +234,7 @@ export struct MineView{
 
     }.size({ height : Common.FULL_PERCENT,
       width : Common.FULL_PERCENT })
-    .backgroundColor($r("app.color.mine_backgroun_color"))
+    .backgroundColor(this.isDark ? $r('app.color.main_background_color_dark'): $r("app.color.mine_backgroun_color"))
 
   }
 }

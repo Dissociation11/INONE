@@ -4,6 +4,8 @@
     "pages/LoginPage",
     "pages/RegisterPage",
     "pages/Transition",
-    "pages/LongVideoPage"
+    "pages/LongVideoPage",
+    "pages/SettingPage",
+    "pages/UserInformationPage"
   ]
 }
