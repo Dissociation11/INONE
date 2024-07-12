@@ -7,6 +7,7 @@ import { router } from '@kit.ArkUI';
 export struct LoginView{
   @State viewModel: LoginViewModel = new LoginViewModel()
   @StorageLink("UserViewModel") userViewModel:UserViewModel  = userViewModel
+  @StorageLink("isDark") isDark: boolean = false
 
   build(){
     Column(){
