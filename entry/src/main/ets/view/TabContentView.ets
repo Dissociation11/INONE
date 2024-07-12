@@ -46,7 +46,7 @@ export struct TabContentView{
 
               }else if(item.mode == TabBarMode.ShortForm){
                 //短视频
-                ShortFormView()
+                ShortFormView({currentIndex:index})
 
               }else if(item.mode == TabBarMode.Mine){
                 //个人中心

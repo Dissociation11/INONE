@@ -142,6 +142,7 @@ export class CommonConstants{
 
   //空行常用百分比
   static readonly SPACE_PERCENT : string = "4%"
-
+  // 请求头路径
+  static readonly REQUEST_URL : string = 'http://10.33.34.177:8800/admin/sysUser'
 
 }

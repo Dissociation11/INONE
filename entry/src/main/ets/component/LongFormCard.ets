@@ -2,6 +2,12 @@ import { CommonConstants } from '../commons/constants/CommonConstants'
 import { LongFormModel, LongFormModelList } from '../model/LongFormModel'
 import { router } from '@kit.ArkUI'
 import { LongFormData } from '../model/LongFormResponse'
+import { RequestTool } from '../commons/utils/RequestTool'
+import { http } from '@kit.NetworkKit'
+
+interface param{
+  videoId:number
+}
 
 @Component
 export struct LongFormCard{
@@ -13,6 +19,35 @@ export struct LongFormCard{
   @State currentTime : number|undefined = 0
   @State ifSliderShow: boolean = false
   @State ifToolShow: boolean = false
+  
+  
+  
+  aboutToAppear(): void {
+    let param :param = {
+      videoId:this.longFormModel.id
+    }
+    console.log(`comment id : ${this.longFormModel.id}`)
+    let httpRequest = http.createHttp()
+    console.log(`Url::${CommonConstants.REQUEST_URL}/getComment`)
+    httpRequest.request(
+      `${CommonConstants.REQUEST_URL}/getComment?videoId=4}`,
+      {
+        method: http.RequestMethod.GET,
+        header: {
+          'Content-Type': 'application/json'
+        },
+        //可选，默认为60000ms
+        connectTimeout: 60000,
+        readTimeout: 60000,
+      }
+    ).then((res)=>{
+      console.log(`Comment : ${JSON.stringify(res)}`)
+    })
+      .catch((err :Error)=>{
+        console.log(`Comment : ${JSON.stringify(err)}`)
+      })
+  }
+  
   build() {
     Column(){
       Stack({alignContent:Alignment.TopStart}){
@@ -79,16 +114,58 @@ export struct LongFormCard{
       Scroll(){
         Tabs(){
           TabContent(){
-            Text("this is description")
+            this.Description()
           }
+          .layoutWeight(1)
             .tabBar("简介")
           TabContent(){
             Text("this is comment")
           }
+          .layoutWeight(1)
             .tabBar("评论")
         }
       }
+      .layoutWeight(1)
     }
+  }
+  
+  @Builder
+  Description(){
+    Column(){
+      Text(this.longFormModel.title)
+        .fontSize(32)
+      Text(this.longFormModel.description)
+        .fontColor("#ff868383")
+      Row(){
+        Column(){
+          Image($r("app.media.like"))
+            .width(30)
+          Text(this.longFormModel.like_num.toString())
+        }
+        .height(60)
+        .alignItems(HorizontalAlign.Start)
+        Column(){
+          Image($r("app.media.share"))
+            .width(30)
+          Text(this.longFormModel.share_num.toString())
+        }
+        .height(60).alignItems(HorizontalAlign.Start)
+      }
+      .justifyContent(FlexAlign.SpaceEvenly)
+      .width(CommonConstants.FULL_PERCENT)
+    }
+    .height(500)
+    .alignItems(HorizontalAlign.Start)
+    .justifyContent(FlexAlign.Start)
+    .width(CommonConstants.FULL_PERCENT)
+  }
+  
+  @Builder
+  Comment(){
+    Column(){
+      
+    }
+    .width(CommonConstants.FULL_PERCENT)
   }
   
   @Builder

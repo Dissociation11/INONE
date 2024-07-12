@@ -47,7 +47,16 @@ export class LongFormResponse{
 export class LongFormData{
   private _author: string|undefined
   private _title: string | undefined
+  private _id: number
 
+  public set id(value: number) {
+    this._id = value
+  }
+
+  public get id(): number {
+    return this._id
+  }
+  
   public set title(value: string | undefined) {
     this._title = value
   }
@@ -94,14 +103,40 @@ export class LongFormData{
     return this._url
   }
 
-  constructor(author: string | undefined, title: string | undefined, description: string | undefined,
-    imageUrl: string | undefined, url: string | undefined) {
+  private _like_num: number
+
+  public set like_num(value: number) {
+    this._like_num = value
+  }
+
+  public get like_num(): number {
+    return this._like_num
+  }
+
+  private _share_num: number
+
+  public set share_num(value: number) {
+    this._share_num = value
+  }
+
+  public get share_num(): number {
+    return this._share_num
+  }
+
+  constructor(author: string | undefined, title: string | undefined, id: number, description: string | undefined,
+    imageUrl: string | undefined, url: string | undefined, like_num: number, share_num: number) {
     this._author = author
     this._title = title
+    this._id = id
     this._description = description
     this._imageUrl = imageUrl
     this._url = url
+    this._like_num = like_num
+    this._share_num = share_num
   }
+
+  
+  
 
   
   
