@@ -19,6 +19,26 @@
     {
       "name": "SYSTEM_BASE_COLOR",
       "value": "#D4237A"
+    },
+    {
+      "name": "INFORMATION_IMAGE_COLOR",
+      "value": "#ff73ddc8"
+    },
+    {
+      "name": "DEFAULT_FONT",
+      "value": "#333"
+    },
+    {
+      "name": "DARK_FONT",
+      "value": "#fff"
+    },
+    {
+      "name": "main_background_color_dark",
+      "value": "#FF3C3C3E"
+    },
+    {
+      "name": "start_window_background_dark",
+      "value": "#FF000000"
     }
   ]
 }

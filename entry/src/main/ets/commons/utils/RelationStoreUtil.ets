@@ -114,6 +114,36 @@ class RelationStoreUtil{
     return user
   }
 
+  async queryUserById(tableName: string, id: number): Promise<User>{
+    let predicate = new relationStore.RdbPredicates(tableName)
+    predicate.equalTo(constant.ID, id)
+    let user: User = {id: -1, userName: "", passWord: "", name: "",phone: "",url: "",role: 1}
+    if (!this.relationDB) {
+      console.log('log: 数据库未初始化')
+      return user
+    }
+    try{
+      let result = await this.relationDB?.query(predicate)
+      if(result?.goToNextRow()){
+        let id = result.getLong(result.getColumnIndex(constant.ID))
+        let userName = result.getString(result.getColumnIndex(constant.USERNAME))
+        let passWord = result.getString(result.getColumnIndex(constant.PASSWORD))
+        let name = result.getString(result.getColumnIndex(constant.NAME))
+        let url = result.getString(result.getColumnIndex(constant.URL))
+        let phone = result.getString(result.getColumnIndex(constant.PHONE))
+        let role = result.getLong(result.getColumnIndex(constant.ROLE))
+        user = {id,userName,passWord,name,url,phone,role}
+        console.log("log: 查询成功")
+      }else{
+        console.log("log：结果为空")
+      }
+    }catch(err){
+      console.log('log: 查询失败')
+      console.error('error: ', JSON.stringify(err))
+    }
+    return user
+  }
+
   //更新表中的数据
   async updateValue(tableName: string,id: number,value: ValuesBucket){
     let predicate = new relationStore.RdbPredicates(tableName)

@@ -13,6 +13,12 @@ export class MineViewModel{
     })
   }
 
+  toInformation(){
+    router.pushUrl({
+      url: 'pages/UserInformationPage'
+    })
+  }
+
 }
 
 export default new MineViewModel()

@@ -11,6 +11,7 @@ import { ShortFormView } from './ShortFormView'
 @Component
 export struct TabContentView{
   @State viewModel : TabContentViewModel = viewModel
+  @StorageLink("isDark") isDark: boolean = false
 
   //底部导航栏内容框
   @Builder TabItemBuilder(item:TabBarItem , index : number){
@@ -21,6 +22,7 @@ export struct TabContentView{
         .width($r("app.float.tabbar_icon_size"))
         .aspectRatio(1)
       Text(item.name)
+        .fontColor(this.isDark ? $r('app.color.DARK_FONT') : $r('app.color.DEFAULT_FONT'))
 
     }.size({width : Common.FULL_PERCENT})
     .justifyContent(FlexAlign.Center)
@@ -61,7 +63,7 @@ export struct TabContentView{
         })
 
       }.barHeight("10%")
-      .backgroundColor($r("app.color.main_background_color"))
+      .backgroundColor(this.isDark ? $r('app.color.start_window_background_dark') : $r("app.color.start_window_background"))
       .animationDuration(300)
       .onAnimationStart((index:number,targetIndex:number,event:TabsAnimationEvent)=>{
         this.viewModel.currentIndex = targetIndex

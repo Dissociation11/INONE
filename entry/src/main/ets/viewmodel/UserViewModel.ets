@@ -8,31 +8,54 @@ import { RelationStoreConstant }from '../commons/constants/RelationStoreConstant
 import { Prompt } from '@kit.ArkUI'
 
 export class UserViewModel {
+
   //用户是否登录
   isLogin: boolean = false
   currentUser: User | null = null
+  currentUserId : number = -1
   private baseUrl = 'http://10.33.34.177:8800/admin/sysUser'
   private loginUrl = '/login'
   private registerUrl = '/register'
 
   initViewModel() {
-    PreferenceUtil.hasKey(PreferenceConstant.ISLOGIN).then((isExist) => {
+    PreferenceUtil.hasKey(PreferenceConstant.IS_LOGIN).then((isExist) => {
       if (isExist) {
-        PreferenceUtil.getPreferenceValue(PreferenceConstant.ISLOGIN, false).then((value) => {
+        PreferenceUtil.getPreferenceValue(PreferenceConstant.IS_LOGIN, false).then((value) => {
           this.isLogin = value as boolean
           console.info(`info: isLogin is ${value.toString()}`)
         })
       } else {
-        PreferenceUtil.putPreferenceValue(PreferenceConstant.ISLOGIN, false)
+        PreferenceUtil.putPreferenceValue(PreferenceConstant.IS_LOGIN, false)
+        console.info('info: create isLogin preference')
+      }
+    })
+    PreferenceUtil.hasKey(PreferenceConstant.USER_ID).then((isExist) => {
+      if (isExist) {
+        PreferenceUtil.getPreferenceValue(PreferenceConstant.USER_ID, -1).then((value) => {
+          this.currentUserId = value as number
+          console.info(`info: currentUserId is ${value.toString()}`)
+          try{
+            RelationStoreUtil.queryUserById(RelationStoreConstant.USER_TABLE_NAME, this.currentUserId).then((user) => {
+              this.currentUser = user
+            })
+          }catch(err){
+            console.log('err: ',JSON.stringify(err))
+          }
+        })
+      } else {
+        PreferenceUtil.putPreferenceValue(PreferenceConstant.USER_ID, -1)
         console.info('info: create isLogin preference')
       }
     })
   }
 
   async signOut() {
-    this.isLogin = !this.isLogin
+    this.isLogin = false
+    this.currentUserId = -1
+    this.currentUser = null
     console.debug(`debug: ${this.isLogin}`)
-    PreferenceUtil.putPreferenceValue(PreferenceConstant.ISLOGIN, this.isLogin)
+    PreferenceUtil.putPreferenceValue(PreferenceConstant.IS_LOGIN, this.isLogin)
+    PreferenceUtil.putPreferenceValue(PreferenceConstant.USER_ID,this.currentUserId)
   }
 
 
@@ -44,8 +67,10 @@ export class UserViewModel {
       return false
     } else if (user.passWord == password) {
       this.isLogin = true
+      this.currentUserId = user.id
       this.currentUser = user
-      PreferenceUtil.putPreferenceValue(PreferenceConstant.ISLOGIN, this.isLogin)
+      PreferenceUtil.putPreferenceValue(PreferenceConstant.IS_LOGIN, this.isLogin)
+      PreferenceUtil.putPreferenceValue(PreferenceConstant.USER_ID, this.currentUserId)
       console.log('log: 登录成功')
       return true
     } else {
